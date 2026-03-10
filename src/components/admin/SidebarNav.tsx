@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link"
-import { SidebarMenu, SidebarMenuItem, SidebarMenuButton, useSidebar } from "@/components/ui/sidebar"
+import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
 import { Pill, Activity, Users, History, Tags, Settings, type LucideIcon } from "lucide-react"
 
 const NAV_ITEMS: { href: string; label: string; Icon: LucideIcon }[] = [
@@ -14,21 +14,17 @@ const NAV_ITEMS: { href: string; label: string; Icon: LucideIcon }[] = [
 ]
 
 export function SidebarNav() {
-  const { state } = useSidebar()
-  const collapsed = state === "collapsed"
-
   return (
     <SidebarMenu className="space-y-1.5">
       {NAV_ITEMS.map(({ href, label, Icon }) => (
         <SidebarMenuItem key={href}>
-          <SidebarMenuButton 
-            tooltip={label} 
-            className={`hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md ${collapsed ? 'justify-center' : ''}`}
+          <SidebarMenuButton
+            tooltip={label}
+            render={<Link href={href} />}
+            className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors"
           >
-            <Link href={href} className={`flex items-center font-medium text-gray-700 ${collapsed ? 'justify-center' : 'gap-3'}`}>
-              <Icon className="size-4 text-[#006338] shrink-0" />
-              {!collapsed && <span>{label}</span>}
-            </Link>
+            <Icon className="text-[#006338]" />
+            <span>{label}</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
       ))}
