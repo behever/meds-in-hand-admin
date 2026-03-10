@@ -1,6 +1,6 @@
 import { SidebarProvider, SidebarTrigger, Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar"
 import Link from "next/link"
-import { Pill, Activity, Users, History, LogOut } from "lucide-react"
+import { Pill, Activity, Users, History, LogOut, Tags } from "lucide-react"
 import { logout } from "@/app/login/actions"
 import { createClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
@@ -38,6 +38,14 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   <Link href="/admin/medications" className="flex items-center gap-3 font-medium text-gray-700">
                     <Pill className="size-4 text-[#006338]" />
                     <span>Medications</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
+                  <Link href="/admin/categories" className="flex items-center gap-3 font-medium text-gray-700">
+                    <Tags className="size-4 text-[#006338]" />
+                    <span>Categories</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

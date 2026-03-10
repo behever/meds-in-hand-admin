@@ -1,4 +1,18 @@
-export default function AdminDashboard() {
+import { createClient } from "@/utils/supabase/server"
+
+export default async function AdminDashboard() {
+  const supabase = await createClient()
+  
+  const [
+    { count: userCount },
+    { count: medCount },
+    { count: pendingCount }
+  ] = await Promise.all([
+    supabase.from('user_medications').select('*', { count: 'exact', head: true }),
+    supabase.from('medications').select('*', { count: 'exact', head: true }),
+    supabase.from('user_medications').select('*', { count: 'exact', head: true }).eq('status', 'pending')
+  ])
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div>
@@ -8,23 +22,23 @@ export default function AdminDashboard() {
 
       <div className="grid gap-6 md:grid-cols-3">
         <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm flex flex-col justify-between">
-          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Users</h3>
-          <div className="mt-4 text-4xl font-light text-gray-900">1,248</div>
+          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">User Medications</h3>
+          <div className="mt-4 text-4xl font-light text-gray-900">{userCount?.toLocaleString() ?? 0}</div>
         </div>
         <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm flex flex-col justify-between">
           <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Canonical Meds</h3>
-          <div className="mt-4 text-4xl font-light text-gray-900">482</div>
+          <div className="mt-4 text-4xl font-light text-gray-900">{medCount?.toLocaleString() ?? 0}</div>
         </div>
         <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm flex flex-col justify-between">
           <h3 className="text-sm font-semibold text-[#006338] uppercase tracking-wide">Pending Corrections</h3>
-          <div className="mt-4 text-4xl font-semibold text-[#006338]">89</div>
+          <div className="mt-4 text-4xl font-semibold text-[#006338]">{pendingCount?.toLocaleString() ?? 0}</div>
         </div>
       </div>
       
-      <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 flex flex-col items-center justify-center min-h-[300px] shadow-inner">
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 flex flex-col items-center justify-center min-h-[200px] shadow-inner">
         <h2 className="text-2xl font-bold text-gray-400 mb-2">Welcome Back</h2>
         <p className="text-sm text-gray-500 max-w-md text-center">
-          The admin interface is fully initialized. Use the sidebar to navigate between managing users, resolving medication corrections, and reviewing audit logs.
+          The admin interface is fully initialized. Use the sidebar to navigate between managing medications, categories, resolving corrections, and reviewing audit logs.
         </p>
       </div>
     </div>
