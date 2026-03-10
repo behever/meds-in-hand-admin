@@ -1,5 +1,6 @@
 import { SidebarProvider, SidebarTrigger, Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar"
 import Link from "next/link"
+import Image from "next/image"
 import { Pill, Activity, Users, History, LogOut, Tags, type LucideIcon } from "lucide-react"
 import { logout } from "@/app/login/actions"
 import { createClient } from "@/utils/supabase/server"
@@ -23,9 +24,23 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     <SidebarProvider>
       <Sidebar collapsible="icon" className="border-r border-border font-sans bg-gray-50/50">
         <SidebarHeader className="border-b border-border h-16 flex items-center justify-center px-5 overflow-hidden">
-          <Link href="/admin" className="flex items-baseline gap-1 min-w-0">
-            <span className="text-[#92C145] text-2xl font-serif italic pr-0.5 shrink-0">Rx</span>
-            <span className="font-extrabold text-[#006338] tracking-tight text-lg group-data-[collapsible=icon]:hidden truncate">Meds In Hand</span>
+          <Link href="/admin" className="flex items-center justify-center">
+            <Image
+              src="/logo.png"
+              alt="Meds In Hand"
+              width={120}
+              height={48}
+              className="h-10 w-auto object-contain group-data-[collapsible=icon]:hidden"
+              priority
+            />
+            <Image
+              src="/logo.png"
+              alt="Meds In Hand"
+              width={32}
+              height={32}
+              className="h-8 w-8 object-contain hidden group-data-[collapsible=icon]:block"
+              priority
+            />
           </Link>
         </SidebarHeader>
 
