@@ -22,7 +22,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <SidebarProvider>
       <Sidebar className="border-r border-border font-sans bg-gray-50/50">
-        <SidebarHeader className="border-b border-border p-5">
+        <SidebarHeader className="border-b border-border h-16 flex items-center px-5">
           <Link href="/admin" className="flex items-baseline gap-1">
             <span className="text-[#92C145] text-2xl font-serif italic pr-0.5">Rx</span>
             <span className="font-extrabold text-[#006338] tracking-tight text-lg">Meds In Hand</span>
