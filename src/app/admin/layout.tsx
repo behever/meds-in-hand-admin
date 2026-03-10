@@ -26,7 +26,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <SidebarGroup>
             <SidebarMenu className="space-y-1.5">
               <SidebarMenuItem>
-                <SidebarMenuButton asChild className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
+                <SidebarMenuButton className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
                   <Link href="/admin" className="flex items-center gap-3 font-medium text-gray-700">
                     <Activity className="size-4 text-[#006338]" />
                     <span>Dashboard</span>
@@ -34,7 +34,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
+                <SidebarMenuButton className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
                   <Link href="/admin/medications" className="flex items-center gap-3 font-medium text-gray-700">
                     <Pill className="size-4 text-[#006338]" />
                     <span>Medications</span>
@@ -42,7 +42,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
+                <SidebarMenuButton className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
                   <Link href="/admin/users" className="flex items-center gap-3 font-medium text-gray-700">
                     <Users className="size-4 text-[#006338]" />
                     <span>Users &amp; Corrections</span>
@@ -50,7 +50,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
+                <SidebarMenuButton className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
                   <Link href="/admin/logs" className="flex items-center gap-3 font-medium text-gray-700">
                     <History className="size-4 text-[#006338]" />
                     <span>Audit Logs</span>
