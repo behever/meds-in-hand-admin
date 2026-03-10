@@ -1,37 +1,30 @@
 export default function AdminDashboard() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-in fade-in duration-500">
       <div>
-        <h1 className="text-3xl font-bold tracking-tighter text-primary">System Status</h1>
-        <p className="text-muted-foreground mt-2">// Overview of Meds In Hand database</p>
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+        <p className="text-gray-500 mt-2 font-mono text-sm uppercase tracking-wider">System Overview</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <div className="border border-border bg-card text-card-foreground p-6">
-          <h3 className="text-sm font-medium text-muted-foreground">Total Users</h3>
-          <div className="mt-4 text-4xl font-mono text-primary">1,248</div>
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm flex flex-col justify-between">
+          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Users</h3>
+          <div className="mt-4 text-4xl font-light text-gray-900">1,248</div>
         </div>
-        <div className="border border-border bg-card text-card-foreground p-6">
-          <h3 className="text-sm font-medium text-muted-foreground">Canonical Meds</h3>
-          <div className="mt-4 text-4xl font-mono text-primary">482</div>
+        <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm flex flex-col justify-between">
+          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Canonical Meds</h3>
+          <div className="mt-4 text-4xl font-light text-gray-900">482</div>
         </div>
-        <div className="border border-border bg-card text-card-foreground p-6">
-          <h3 className="text-sm font-medium text-destructive">Pending Corrections</h3>
-          <div className="mt-4 text-4xl font-mono text-destructive">89</div>
+        <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm flex flex-col justify-between">
+          <h3 className="text-sm font-semibold text-[#006338] uppercase tracking-wide">Pending Corrections</h3>
+          <div className="mt-4 text-4xl font-semibold text-[#006338]">89</div>
         </div>
       </div>
       
-      <div className="border border-border p-8 bg-card flex flex-col items-center justify-center min-h-[300px]">
-        <div className="text-xs text-muted-foreground font-mono text-center leading-tight mb-6">
-{`   _____               .___         .__          ___ ___                     .___ 
-  /     \\   ____   __| _/______   |__| ____    /   |   \\_____    ____   __| _/ 
- /  \\ /  \\_/ __ \\ / __ |/  ___/   |  |/    \\  /    ~    \\__  \\  /    \\ / __ |  
-/    Y    \\  ___// /_/ |\\___ \\    |  |   |  \\ \\    Y    // __ \\|   |  \\ /_/ |  
-\\____|__  /\\___  >____ /____  >   |__|___|  /  \\___|_  /(____  /___|  /____ |  
-        \\/     \\/     \\/    \\/            \\/         \\/      \\/     \\/     \\/  `}
-        </div>
-        <p className="text-sm text-muted-foreground max-w-md text-center">
-          Terminal-style admin interface initialized. Awaiting commands.
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 flex flex-col items-center justify-center min-h-[300px] shadow-inner">
+        <h2 className="text-2xl font-bold text-gray-400 mb-2">Welcome Back</h2>
+        <p className="text-sm text-gray-500 max-w-md text-center">
+          The admin interface is fully initialized. Use the sidebar to navigate between managing users, resolving medication corrections, and reviewing audit logs.
         </p>
       </div>
     </div>
