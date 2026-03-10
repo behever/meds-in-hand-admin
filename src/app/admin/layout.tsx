@@ -1,18 +1,10 @@
-import { SidebarProvider, SidebarTrigger, Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar"
-import Link from "next/link"
-import Image from "next/image"
-import { Pill, Activity, Users, History, LogOut, Tags, type LucideIcon } from "lucide-react"
+import { SidebarProvider, SidebarTrigger, Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarFooter } from "@/components/ui/sidebar"
 import { logout } from "@/app/login/actions"
 import { createClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
-
-const NAV_ITEMS: { href: string; label: string; Icon: LucideIcon }[] = [
-  { href: '/admin',             label: 'Dashboard',          Icon: Activity },
-  { href: '/admin/medications', label: 'Medications',         Icon: Pill     },
-  { href: '/admin/categories',  label: 'Categories',          Icon: Tags     },
-  { href: '/admin/users',       label: 'Users & Corrections', Icon: Users    },
-  { href: '/admin/logs',        label: 'Audit Logs',          Icon: History  },
-]
+import { SidebarLogo } from "@/components/admin/SidebarLogo"
+import { SidebarNav } from "@/components/admin/SidebarNav"
+import { SidebarLogout } from "@/components/admin/SidebarLogout"
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
@@ -23,52 +15,18 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <SidebarProvider>
       <Sidebar collapsible="icon" className="border-r border-border font-sans bg-gray-50/50">
-        <SidebarHeader className="border-b border-border h-16 flex items-center justify-center px-5 overflow-hidden">
-          <Link href="/admin" className="flex items-center justify-center">
-            <Image
-              src="/logo.png"
-              alt="Meds In Hand"
-              width={120}
-              height={48}
-              className="h-10 w-auto object-contain group-data-[collapsible=icon]:hidden"
-              priority
-            />
-            <Image
-              src="/logo.png"
-              alt="Meds In Hand"
-              width={32}
-              height={32}
-              className="h-8 w-8 object-contain hidden group-data-[collapsible=icon]:block"
-              priority
-            />
-          </Link>
+        <SidebarHeader className="border-b border-border h-16 flex items-center justify-center px-3">
+          <SidebarLogo />
         </SidebarHeader>
 
         <SidebarContent className="p-3">
           <SidebarGroup>
-            <SidebarMenu className="space-y-1.5">
-              {NAV_ITEMS.map(({ href, label, Icon }) => (
-                <SidebarMenuItem key={href}>
-                  <SidebarMenuButton tooltip={label} className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
-                    <Link href={href} className="flex items-center gap-3 font-medium text-gray-700">
-                      <Icon className="size-4 text-[#006338] shrink-0" />
-                      <span>{label}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            <SidebarNav />
           </SidebarGroup>
         </SidebarContent>
 
         <SidebarFooter className="border-t border-border p-4">
-          <div className="text-xs font-mono text-gray-500 mb-4 truncate w-full px-2 group-data-[collapsible=icon]:hidden">{user.email}</div>
-          <form action={logout}>
-            <button type="submit" className="flex items-center gap-2 w-full text-left text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors p-2 rounded-md font-medium text-sm">
-              <LogOut className="size-4 shrink-0" />
-              <span className="group-data-[collapsible=icon]:hidden">Terminate Session</span>
-            </button>
-          </form>
+          <SidebarLogout email={user.email!} />
         </SidebarFooter>
       </Sidebar>
 
