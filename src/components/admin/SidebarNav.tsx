@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton, useSidebar } from "@/components/ui/sidebar"
-import { Pill, Activity, Users, History, Tags, type LucideIcon } from "lucide-react"
+import { Pill, Activity, Users, History, Tags, Settings, type LucideIcon } from "lucide-react"
 
 const NAV_ITEMS: { href: string; label: string; Icon: LucideIcon }[] = [
   { href: '/admin',             label: 'Dashboard',          Icon: Activity },
@@ -10,6 +10,7 @@ const NAV_ITEMS: { href: string; label: string; Icon: LucideIcon }[] = [
   { href: '/admin/categories',  label: 'Categories',          Icon: Tags     },
   { href: '/admin/users',       label: 'Users & Corrections', Icon: Users    },
   { href: '/admin/logs',        label: 'Audit Logs',          Icon: History  },
+  { href: '/admin/settings',    label: 'Settings',            Icon: Settings },
 ]
 
 export function SidebarNav() {
