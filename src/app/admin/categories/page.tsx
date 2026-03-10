@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { createClient } from "@/utils/supabase/server"
 import { createCategory, updateCategory, deleteCategory } from "../actions"
+import { DeleteButton } from "@/components/admin/DeleteButton"
 
 export default async function CategoriesPage({
   searchParams
@@ -10,17 +11,14 @@ export default async function CategoriesPage({
   const params = await searchParams
   const supabase = await createClient()
   const { data: categories } = await supabase.from('categories').select('*').order('name')
-  
-  const editingId = params.edit
-  const editingCategory = editingId ? categories?.find(c => c.id === editingId) : null
+
+  const editingCategory = params.edit ? categories?.find(c => c.id === params.edit) : null
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex items-center justify-between border-b border-gray-200 pb-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Categories</h1>
-          <p className="text-gray-500 mt-2 font-mono text-sm uppercase tracking-wider">Manage Medication Classes</p>
-        </div>
+      <div className="border-b border-gray-200 pb-4">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Categories</h1>
+        <p className="text-gray-500 mt-2 font-mono text-sm uppercase tracking-wider">Manage Medication Classes</p>
       </div>
 
       {params.error && (
@@ -39,20 +37,11 @@ export default async function CategoriesPage({
             <input type="hidden" name="id" value={editingCategory.id} />
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-              <input 
-                name="name" 
-                required 
-                defaultValue={editingCategory.name}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#006338] focus:border-[#006338]" 
-              />
+              <input name="name" required defaultValue={editingCategory.name} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#006338] focus:border-[#006338]" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Description (optional)</label>
-              <input 
-                name="description" 
-                defaultValue={editingCategory.description || ''}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#006338] focus:border-[#006338]" 
-              />
+              <input name="description" defaultValue={editingCategory.description || ''} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#006338] focus:border-[#006338]" />
             </div>
             <button type="submit" className="bg-amber-600 text-white px-4 py-2 rounded-md font-medium text-sm shadow-sm hover:bg-amber-700 transition-colors">
               Save Changes
@@ -99,26 +88,10 @@ export default async function CategoriesPage({
                 <TableCell className="text-gray-500">{cat.description || '-'}</TableCell>
                 <TableCell className="text-right">
                   <div className="inline-flex gap-2">
-                    <a 
-                      href={`/admin/categories?edit=${cat.id}`}
-                      className="text-xs border border-gray-300 text-gray-600 px-3 py-1.5 rounded-md hover:bg-gray-100 transition-all font-medium"
-                    >
+                    <a href={`/admin/categories?edit=${cat.id}`} className="text-xs border border-gray-300 text-gray-600 px-3 py-1.5 rounded-md hover:bg-gray-100 transition-all font-medium">
                       Edit
                     </a>
-                    <form action={deleteCategory} className="inline">
-                      <input type="hidden" name="id" value={cat.id} />
-                      <button 
-                        type="submit" 
-                        className="text-xs border border-red-200 text-red-600 px-3 py-1.5 rounded-md hover:bg-red-50 transition-all font-medium"
-                        onClick={(e) => {
-                          if (!confirm(`Delete category "${cat.name}"? This cannot be undone.`)) {
-                            e.preventDefault()
-                          }
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </form>
+                    <DeleteButton label={cat.name} action={deleteCategory} idName="id" idValue={cat.id} />
                   </div>
                 </TableCell>
               </TableRow>

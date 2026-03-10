@@ -2,6 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge"
 import { createClient } from "@/utils/supabase/server"
 import { createMedication, updateMedication, deleteMedication } from "../actions"
+import { DeleteButton } from "@/components/admin/DeleteButton"
 
 export default async function MedicationsPage({
   searchParams
@@ -10,26 +11,16 @@ export default async function MedicationsPage({
 }) {
   const params = await searchParams
   const supabase = await createClient()
-  const { data: medications } = await supabase
-    .from('medications')
-    .select('*, categories(name)')
-    .order('name')
-  
-  const { data: categories } = await supabase
-    .from('categories')
-    .select('id, name')
-    .order('name')
+  const { data: medications } = await supabase.from('medications').select('*, categories(name)').order('name')
+  const { data: categories } = await supabase.from('categories').select('id, name').order('name')
 
-  const editingId = params.edit
-  const editingMed = editingId ? medications?.find(m => m.id === editingId) : null
+  const editingMed = params.edit ? medications?.find(m => m.id === params.edit) : null
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex items-center justify-between border-b border-gray-200 pb-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Medications</h1>
-          <p className="text-gray-500 mt-2 font-mono text-sm uppercase tracking-wider">Canonical Library</p>
-        </div>
+      <div className="border-b border-gray-200 pb-4">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Medications</h1>
+        <p className="text-gray-500 mt-2 font-mono text-sm uppercase tracking-wider">Canonical Library</p>
       </div>
 
       {params.error && (
@@ -48,21 +39,11 @@ export default async function MedicationsPage({
             <input type="hidden" name="id" value={editingMed.id} />
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-              <input 
-                name="name" 
-                required 
-                defaultValue={editingMed.name}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#006338] focus:border-[#006338]" 
-              />
+              <input name="name" required defaultValue={editingMed.name} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#006338] focus:border-[#006338]" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-              <select 
-                name="category_id" 
-                required 
-                defaultValue={editingMed.category_id}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#006338] focus:border-[#006338]"
-              >
+              <select name="category_id" required defaultValue={editingMed.category_id} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#006338] focus:border-[#006338]">
                 {categories?.map((cat) => (
                   <option key={cat.id} value={cat.id}>{cat.name}</option>
                 ))}
@@ -122,26 +103,10 @@ export default async function MedicationsPage({
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="inline-flex gap-2">
-                    <a 
-                      href={`/admin/medications?edit=${med.id}`}
-                      className="text-xs border border-gray-300 text-gray-600 px-3 py-1.5 rounded-md hover:bg-gray-100 transition-all font-medium"
-                    >
+                    <a href={`/admin/medications?edit=${med.id}`} className="text-xs border border-gray-300 text-gray-600 px-3 py-1.5 rounded-md hover:bg-gray-100 transition-all font-medium">
                       Edit
                     </a>
-                    <form action={deleteMedication} className="inline">
-                      <input type="hidden" name="id" value={med.id} />
-                      <button 
-                        type="submit" 
-                        className="text-xs border border-red-200 text-red-600 px-3 py-1.5 rounded-md hover:bg-red-50 transition-all font-medium"
-                        onClick={(e) => {
-                          if (!confirm(`Delete medication "${med.name}"? This cannot be undone.`)) {
-                            e.preventDefault()
-                          }
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </form>
+                    <DeleteButton label={med.name} action={deleteMedication} idName="id" idValue={med.id} />
                   </div>
                 </TableCell>
               </TableRow>
