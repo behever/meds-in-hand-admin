@@ -1,11 +1,11 @@
 'use server'
 
-import { createClient } from '@/utils/supabase/server'
+import { createAdminClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 async function logAudit(
-  supabase: Awaited<ReturnType<typeof createClient>>,
+  supabase: ReturnType<typeof createAdminClient>,
   eventType: string,
   details: Record<string, unknown>
 ) {
@@ -21,7 +21,7 @@ function redirectError(path: string, message: string): never {
 }
 
 export async function createCategory(formData: FormData) {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
   const name = formData.get('name') as string
   const description = formData.get('description') as string
 
@@ -41,7 +41,7 @@ export async function createCategory(formData: FormData) {
 }
 
 export async function updateCategory(formData: FormData) {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
   const id = formData.get('id') as string
   const name = formData.get('name') as string
   const description = formData.get('description') as string
@@ -58,7 +58,7 @@ export async function updateCategory(formData: FormData) {
 }
 
 export async function deleteCategory(formData: FormData) {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
   const id = formData.get('id') as string
 
   if (!id) redirectError('/admin/categories', 'ID is required')
@@ -74,7 +74,7 @@ export async function deleteCategory(formData: FormData) {
 }
 
 export async function createMedication(formData: FormData) {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
   const name = formData.get('name') as string
   const category_id = formData.get('category_id') as string
 
@@ -94,7 +94,7 @@ export async function createMedication(formData: FormData) {
 }
 
 export async function updateMedication(formData: FormData) {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
   const id = formData.get('id') as string
   const name = formData.get('name') as string
   const category_id = formData.get('category_id') as string
@@ -111,7 +111,7 @@ export async function updateMedication(formData: FormData) {
 }
 
 export async function deleteMedication(formData: FormData) {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
   const id = formData.get('id') as string
 
   if (!id) redirectError('/admin/medications', 'ID is required')
@@ -127,7 +127,7 @@ export async function deleteMedication(formData: FormData) {
 }
 
 export async function mapUserMedication(formData: FormData) {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
   const user_med_id = formData.get('user_med_id') as string
   const canonical_id = formData.get('canonical_id') as string
 
@@ -149,7 +149,7 @@ export async function mapUserMedication(formData: FormData) {
 }
 
 export async function dismissUserMedication(formData: FormData) {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
   const user_med_id = formData.get('user_med_id') as string
 
   if (!user_med_id) redirectError('/admin/users', 'Missing ID')
