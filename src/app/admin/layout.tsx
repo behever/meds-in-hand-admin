@@ -1,8 +1,18 @@
-import { SidebarProvider, SidebarTrigger, Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger, Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar"
 import Link from "next/link"
-import { Pill, Activity, Users, History } from "lucide-react"
+import { Pill, Activity, Users, History, LogOut } from "lucide-react"
+import { logout } from "@/app/login/actions"
+import { createClient } from "@/utils/supabase/server"
+import { redirect } from "next/navigation"
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect('/login')
+  }
+
   return (
     <SidebarProvider>
       <Sidebar className="border-r border-border font-mono">
@@ -47,6 +57,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </SidebarMenu>
           </SidebarGroup>
         </SidebarContent>
+        <SidebarFooter className="border-t border-border p-4">
+          <div className="text-xs text-muted-foreground mb-4 truncate w-full">
+            {user.email}
+          </div>
+          <form action={logout}>
+            <SidebarMenuButton className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10">
+              <button type="submit" className="flex items-center gap-2 w-full text-left">
+                <LogOut className="size-4" />
+                <span>Terminate Session</span>
+              </button>
+            </SidebarMenuButton>
+          </form>
+        </SidebarFooter>
       </Sidebar>
       <main className="flex-1 min-h-screen bg-background text-foreground flex flex-col font-mono">
         <header className="h-16 border-b border-border flex items-center px-4">
