@@ -21,11 +21,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <SidebarProvider>
-      <Sidebar className="border-r border-border font-sans bg-gray-50/50">
-        <SidebarHeader className="border-b border-border h-16 flex items-center px-5">
-          <Link href="/admin" className="flex items-baseline gap-1">
-            <span className="text-[#92C145] text-2xl font-serif italic pr-0.5">Rx</span>
-            <span className="font-extrabold text-[#006338] tracking-tight text-lg">Meds In Hand</span>
+      <Sidebar collapsible="icon" className="border-r border-border font-sans bg-gray-50/50">
+        <SidebarHeader className="border-b border-border h-16 flex items-center px-5 overflow-hidden">
+          <Link href="/admin" className="flex items-baseline gap-1 min-w-0">
+            <span className="text-[#92C145] text-2xl font-serif italic pr-0.5 shrink-0">Rx</span>
+            <span className="font-extrabold text-[#006338] tracking-tight text-lg group-data-[collapsible=icon]:hidden truncate">Meds In Hand</span>
           </Link>
         </SidebarHeader>
 
@@ -34,9 +34,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <SidebarMenu className="space-y-1.5">
               {NAV_ITEMS.map(({ href, label, Icon }) => (
                 <SidebarMenuItem key={href}>
-                  <SidebarMenuButton className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
+                  <SidebarMenuButton tooltip={label} className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors rounded-md p-2">
                     <Link href={href} className="flex items-center gap-3 font-medium text-gray-700">
-                      <Icon className="size-4 text-[#006338]" />
+                      <Icon className="size-4 text-[#006338] shrink-0" />
                       <span>{label}</span>
                     </Link>
                   </SidebarMenuButton>
@@ -47,11 +47,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         </SidebarContent>
 
         <SidebarFooter className="border-t border-border p-4">
-          <div className="text-xs font-mono text-gray-500 mb-4 truncate w-full px-2">{user.email}</div>
+          <div className="text-xs font-mono text-gray-500 mb-4 truncate w-full px-2 group-data-[collapsible=icon]:hidden">{user.email}</div>
           <form action={logout}>
             <button type="submit" className="flex items-center gap-2 w-full text-left text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors p-2 rounded-md font-medium text-sm">
-              <LogOut className="size-4" />
-              <span>Terminate Session</span>
+              <LogOut className="size-4 shrink-0" />
+              <span className="group-data-[collapsible=icon]:hidden">Terminate Session</span>
             </button>
           </form>
         </SidebarFooter>
