@@ -25,7 +25,7 @@ export default async function LoginPage({
           </div>
         )}
 
-        <form className="space-y-6">
+        <form action={login} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="email" className="text-muted-foreground">User_ID (Email)</Label>
             <Input 
@@ -48,8 +48,8 @@ export default async function LoginPage({
             />
           </div>
           
-          <Button 
-            formAction={login} 
+          <Button type="submit" 
+             
             className="w-full bg-primary text-black hover:bg-primary/90 font-bold uppercase tracking-widest rounded-none mt-4"
           >
             Init Session
