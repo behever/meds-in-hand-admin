@@ -15,7 +15,7 @@ export function SidebarLogout({ email }: { email: string }) {
           <SidebarMenuButton
             tooltip="Logout"
             render={<button type="submit" form="logout-form" />}
-            className="text-red-600 hover:bg-red-50 hover:text-red-700"
+            className="text-red-600 hover:bg-red-50 hover:text-red-700 group-data-[collapsible=icon]:mx-auto"
           >
             <LogOut />
             <span>Terminate Session</span>

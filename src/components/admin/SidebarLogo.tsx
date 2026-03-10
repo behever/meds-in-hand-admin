@@ -9,7 +9,7 @@ export function SidebarLogo() {
   const collapsed = state === "collapsed"
 
   return (
-    <Link href="/admin" className="flex items-center justify-center">
+    <Link href="/admin" className="flex items-center justify-center w-full">
       <Image
         src="/logo.png"
         alt="Meds In Hand"

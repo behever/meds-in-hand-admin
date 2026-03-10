@@ -21,7 +21,7 @@ export function SidebarNav() {
           <SidebarMenuButton
             tooltip={label}
             render={<Link href={href} />}
-            className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors"
+            className="hover:bg-[#006338]/10 hover:text-[#006338] transition-colors group-data-[collapsible=icon]:mx-auto"
           >
             <Icon className="text-[#006338]" />
             <span>{label}</span>
